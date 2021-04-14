@@ -10,13 +10,21 @@
 // No boiler plate code this time,
 // you can do this!
 
-// I AM NOT DONE
-
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
-//TODO: Add your code here
+// AppendBar for Vec<String> just inserts a new element "Bar" into the vector.
+impl AppendBar for Vec<String> {
+    // The key here is that the trait expects append_bar() to take an OWNED
+    // value, "self". Stating "mut self" still satisfies the borrow checker
+    // because we're not borrowing --- we are still taking an OWNED value, just
+    // that it's also mutable.
+    fn append_bar(mut self) -> Self {
+        self.push(String::from("Bar"));
+        self
+    }
+}
 
 #[cfg(test)]
 mod tests {
