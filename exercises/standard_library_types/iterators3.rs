@@ -6,8 +6,6 @@
 //    list_of_results functions.
 // Execute `rustlings hint iterators3` to get some hints!
 
-// I AM NOT DONE
-
 #[derive(Debug, PartialEq, Eq)]
 pub enum DivisionError {
     NotDivisible(NotDivisibleError),
@@ -22,20 +20,36 @@ pub struct NotDivisibleError {
 
 // Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
 // Otherwise, return a suitable error.
-pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {}
-
-// Complete the function and return a value of the correct type so the test passes.
-// Desired output: Ok([1, 11, 1426, 3])
-fn result_with_list() -> () {
-    let numbers = vec![27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+    if b == 0 {
+        return Err(DivisionError::DivideByZero);
+    }
+    if a % b == 0 {
+        return Ok(a / b);
+    }
+    Err(DivisionError::NotDivisible(NotDivisibleError {
+        dividend: a,
+        divisor: b,
+    }))
 }
 
-// Complete the function and return a value of the correct type so the test passes.
-// Desired output: [Ok(1), Ok(11), Ok(1426), Ok(3)]
-fn list_of_results() -> () {
+// Desired output: Ok([1, 11, 1426, 3])
+//
+// To quote https://doc.rust-lang.org/rust-by-example/error/iter_result.html#fail-the-entire-operation-with-collect:
+//      Result implements FromIter so that a vector of results (Vec<Result<T,
+//      E>>) can be turned into a result with a vector (Result<Vec<T>, E>). Once
+//      an Result::Err is found, the iteration will terminate.
+fn result_with_list() -> Result<Vec<i32>, DivisionError> {
     let numbers = vec![27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+    let division_results = numbers.into_iter().map(|n| divide(n, 27)).collect();
+    division_results
+}
+
+// Desired output: [Ok(1), Ok(11), Ok(1426), Ok(3)]
+fn list_of_results() -> Vec<Result<i32, DivisionError>> {
+    let numbers = vec![27, 297, 38502, 81];
+    let division_results = numbers.into_iter().map(|n| divide(n, 27)).collect();
+    division_results
 }
 
 #[cfg(test)]
