@@ -10,6 +10,9 @@ fn main() {
 
     let mut vec1 = fill_vec(vec0);
 
+    // Uncommenting this line will break compilation!
+    //    println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
+
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 
     vec1.push(88);
@@ -25,7 +28,12 @@ fn main() {
 // expect to take a mutable reference to it instead.
 //
 // Q: How do we make "vec" mutable?
-fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
+// A: Just add the "mut" keyword to make the argument "mut vec: Vec<i32>". Note
+// however, that up in main(), we cannot use vec0 again after the call to
+// fill_vec(), because a *move* occurs in the call to fill_vec(). If we want to
+// take a mutable borrow (not a move) instead, see the solution to the 3rd
+// answer variation in the previous exercise).
+fn fill_vec(mut vec: Vec<i32>) -> Vec<i32> {
     vec.push(22);
     vec.push(44);
     vec.push(66);
