@@ -5,9 +5,22 @@
 // I AM NOT DONE
 
 fn main() {
-    let vec0 = Vec::new();
+    //    let vec0 = Vec::new();
 
-    let mut vec1 = fill_vec(vec0);
+    //    let mut vec1 = fill_vec(vec0);
+
+    // Approach 1 (from "rustlings hint move_semantics2"): Just create 2
+    // separate vectors, and pass one into fill_vec(), and leave the other one
+    // as-is to be used within main(). Here vec_temp is the new vector that's
+    // passed into fill_vec(). "vec0" doesn't change, except for the type
+    // declaration. We need this type information now because when "println!()"
+    // uses it it needs to know the type of elements held inside it as it
+    // attempts to print everything in it (even though vec0 is empty, println!()
+    // doesn't know that).
+    let vec0: Vec<i32> = Vec::new();
+    let vec_temp = Vec::new();
+
+    let mut vec1 = fill_vec(vec_temp);
 
     // The key difference with this exercise vs. move_semantics1 is that we're
     // trying to use vec0 here (dereference it to the underlying bytes that it
@@ -45,6 +58,11 @@ fn main() {
     vec1.push(88);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+
+    // OUTPUT:
+    //
+    //    vec0 has length 0 content `[]`
+    //    vec1 has length 4 content `[22, 44, 66, 88]`
 }
 
 fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
