@@ -26,7 +26,16 @@ fn main() {
     //
     // Q: how can we declare a different intent here so that we can mutate
     // the underlying vector within main() directly?
-    let vec1 = fill_vec(vec0);
+    //
+    //    let vec1 = fill_vec(vec0);
+    //
+    // A: We just use the "mut" keyword. Now main() can use vec1 to mutate those
+    // bytes pointed-to by vec (originally vec0). In summary you could say that
+    // vec0 was the original owner of those bytes, then fill_vec()'s "vec" owned
+    // it (via a *move*), then again it was moved again to "vec1". So vec1 is
+    // the only valid owner now in main(). We could repeat the cycle over again
+    // by calling fill_vec() again.
+    let mut vec1 = fill_vec(vec0);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 
