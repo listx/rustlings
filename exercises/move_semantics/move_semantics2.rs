@@ -6,7 +6,7 @@
 
 fn main() {
     // Approach 3 (from "rustlings hint move_semantics2"): Just create a single
-    // mutable reference, and make fill_vec() grow it directly. So now
+    // mutable variable, and make fill_vec() grow it directly. So now
     // fill_vec() expects a mutable reference to borrow (no new vectors are
     // being created in this program). In other words, the other 2 approaches
     // involve a deep copy, but this one does not. It doesn't even involve
@@ -25,7 +25,7 @@ fn main() {
     // into fill_vec().
     //
     // The thing to remember is that whenever a move occurs, essentially the
-    // original pointer is dropped (destroyed). This is explained in
+    // original variable is destroyed (becomes invalid). This is explained in
     // https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#ways-variables-and-data-interact-move
     // (please read this subsection in its entirety as it has pictures and
     // everything to make it easy!). So here, vec0 is the original pointer to
