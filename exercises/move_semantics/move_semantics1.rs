@@ -42,6 +42,18 @@ fn main() {
     vec1.push(88);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+
+    // To prove our point that vec1 is the owner, here's some more code that
+    // just uses vec1.
+
+    // Ask fill_vec() to grow vec1 again.
+    vec1 = fill_vec(vec1);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+
+    vec1.push(99);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 }
 
 // Take a vector, then grow it with 3 more elements.
