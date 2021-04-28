@@ -19,6 +19,8 @@ fn main() {
 }
 
 // `fill_vec()` no longer takes `vec: Vec<i32>` as argument
+//
+// Q: How can we make fill_vec() create a new vector from scratch?
 fn fill_vec() -> Vec<i32> {
     let mut vec = vec;
 
