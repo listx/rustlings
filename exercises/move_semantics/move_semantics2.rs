@@ -5,9 +5,18 @@
 // I AM NOT DONE
 
 fn main() {
-    let vec0 = Vec::new();
+    // Approach 3 (from "rustlings hint move_semantics2"): Just create a single
+    // mutable variable, and make fill_vec() grow it directly. So now
+    // fill_vec() expects a mutable reference to borrow (no new vectors are
+    // being created in this program). In other words, the other 2 approaches
+    // involve a deep copy, but this one does not. It doesn't even involve
+    // shallow copies, because we only have 1 pointer (vec0) that we pass
+    // around. As per the hint, this makes vec1 needless as there's no point in
+    // having 2 pointers around for the *same* bytes in memory when we can just
+    // have 1. Hence the removal of vec1.
+    let mut vec0 = Vec::new();
 
-    let mut vec1 = fill_vec(&vec0);
+    fill_vec(&mut vec0);
 
     // The key difference with this exercise vs. move_semantics1 is that we're
     // trying to use vec0 here (dereference it to the underlying bytes that it
@@ -42,38 +51,18 @@ fn main() {
     // Do not change the following line!
     println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
 
-    vec1.push(88);
+    vec0.push(88);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
 
     // OUTPUT:
     //
-    //    vec0 has length 0 content `[]`
-    //    vec1 has length 4 content `[22, 44, 66, 88]`
+    //    vec0 has length 3 content `[22, 44, 66]`
+    //    vec0 has length 4 content `[22, 44, 66, 88]`
 }
 
-fn fill_vec(vec: &Vec<i32>) -> Vec<i32> {
-    // let mut vec = vec;
-    //    vec.push(22);
-    //    vec.push(44);
-    //    vec.push(66);
-
-    //    vec
-
-    // Approach 2 (from "rustlings hint move_semantics2"): Make fill_vec() use
-    // the vec argument as a starting point for a completely new vector. So just
-    // clone the given one, then add into this new cloned copy. This way we
-    // avoid the move because we take a reference (& symbol) and Rust knows that
-    // we've only temporarily borrowed the argument, so that the original
-    // argument is *NOT* dropped when fill_vec() is called.
-    //
-    // The easiest way to use vec as a starting point is to clone it so that we
-    // get whatever it has inside it.
-    let mut vec_new = vec.clone();
-
-    vec_new.push(22);
-    vec_new.push(44);
-    vec_new.push(66);
-
-    vec_new
+fn fill_vec(vec: &mut Vec<i32>) -> () {
+    vec.push(22);
+    vec.push(44);
+    vec.push(66);
 }
