@@ -22,10 +22,10 @@ fn main() {
 
 // Here we are quite simply modifying the underlying memory pointed by vec,
 // by calling push(). As it stands though, the declaration in the parameter
-// list "vec: Vec<i32>" states that "vec" is an immutable reference. And so
+// list "vec: Vec<i32>" states that "vec" is an immutable variable. And so
 // either we have to perform only non-mutating (read-only) operations on it,
 // or, if we want to keep the push() calls to modify it, declare that we
-// expect to take a mutable reference to it instead.
+// expect it to be mutable instead.
 //
 // Q: How do we make "vec" mutable?
 // A: Just add the "mut" keyword to make the argument "mut vec: Vec<i32>". Note

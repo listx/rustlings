@@ -20,7 +20,7 @@ fn main() {
 //
 // Q: How can we make fill_vec() create a new vector from scratch?
 //
-// A: We just move the heap allocation call (Vec::new()) from main() to be
+// A: We just move the vector creation (Vec::new()) from main() to be
 // within fill_vec()'s definition.
 //
 // This is exactly like Vec::new() itself, but with a twist that it just comes
