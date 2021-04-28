@@ -5,22 +5,9 @@
 // I AM NOT DONE
 
 fn main() {
-    //    let vec0 = Vec::new();
+    let vec0 = Vec::new();
 
-    //    let mut vec1 = fill_vec(vec0);
-
-    // Approach 1 (from "rustlings hint move_semantics2"): Just create 2
-    // separate vectors, and pass one into fill_vec(), and leave the other one
-    // as-is to be used within main(). Here vec_temp is the new vector that's
-    // passed into fill_vec(). "vec0" doesn't change, except for the type
-    // declaration. We need this type information now because when "println!()"
-    // uses it it needs to know the type of elements held inside it as it
-    // attempts to print everything in it (even though vec0 is empty, println!()
-    // doesn't know that).
-    let vec0: Vec<i32> = Vec::new();
-    let vec_temp = Vec::new();
-
-    let mut vec1 = fill_vec(vec_temp);
+    let mut vec1 = fill_vec(&vec0);
 
     // The key difference with this exercise vs. move_semantics1 is that we're
     // trying to use vec0 here (dereference it to the underlying bytes that it
@@ -65,12 +52,28 @@ fn main() {
     //    vec1 has length 4 content `[22, 44, 66, 88]`
 }
 
-fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
-    let mut vec = vec;
+fn fill_vec(vec: &Vec<i32>) -> Vec<i32> {
+    // let mut vec = vec;
+    //    vec.push(22);
+    //    vec.push(44);
+    //    vec.push(66);
 
-    vec.push(22);
-    vec.push(44);
-    vec.push(66);
+    //    vec
 
-    vec
+    // Approach 2 (from "rustlings hint move_semantics2"): Make fill_vec() use
+    // the vec argument as a starting point for a completely new vector. So just
+    // clone the given one, then add into this new cloned copy. This way we
+    // avoid the move because we take a reference (& symbol) and Rust knows that
+    // we've only temporarily borrowed the argument, so that the original
+    // argument is *NOT* dropped when fill_vec() is called.
+    //
+    // The easiest way to use vec as a starting point is to clone it so that we
+    // get whatever it has inside it.
+    let mut vec_new = vec.clone();
+
+    vec_new.push(22);
+    vec_new.push(44);
+    vec_new.push(66);
+
+    vec_new
 }
