@@ -11,8 +11,6 @@ struct Person {
     age: usize,
 }
 
-// I AM NOT DONE
-
 // Steps:
 // 1. If the length of the provided string is 0, an error should be returned
 // 2. Split the given string on the commas present in it
@@ -26,6 +24,36 @@ struct Person {
 impl FromStr for Person {
     type Err = Box<dyn error::Error>;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        if s.len() == 0 {
+            return Err("empty".into());
+
+            // This also works, but it's a bit awkward because we're
+            // constructing the Err() type and then converting the whole thing
+            // (instead of just converting the thing inside the Err() type to
+            // begin with, as above).
+            //
+            //     return Err("empty").map_err(From::from);
+        }
+        // split() returns an iterator.
+        let mut split = s.split(',');
+        let name_str = match split.next() {
+            None => return Err("empty".into()),
+            Some(name_str) => name_str,
+        };
+        let age_str = match split.next() {
+            None => return Err("no age".into()),
+            Some(age_str) => age_str,
+        };
+
+        if split.next().is_some() {
+            return Err("too many elements".into());
+        }
+        if name_str.is_empty() {
+            return Err("no name".into());
+        }
+        let name = name_str.to_string();
+        let age = age_str.parse()?;
+        Ok(Person { name, age })
     }
 }
 
