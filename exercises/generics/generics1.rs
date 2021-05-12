@@ -1,9 +1,10 @@
 // This shopping list program isn't compiling!
 // Use your knowledge of generics to fix it.
 
-// I AM NOT DONE
-
 fn main() {
-    let mut shopping_list: Vec<?> = Vec::new();
+    // This can work:
+    // let mut shopping_list: Vec<&'static str> = Vec::new();
+    // Or let the compiler infer it:
+    let mut shopping_list: Vec<_> = Vec::new();
     shopping_list.push("milk");
 }
